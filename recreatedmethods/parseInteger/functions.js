@@ -1,43 +1,44 @@
 function parseInteger(str){
     // Таблиця символів '0' до '9' в їхніх ASCII-кодових значеннях
-  const zeroCharCode = '0'.charCodeAt(0)
-  const nineCharCode = '9'.charCodeAt(0)
+    const zeroCharCode = '0'.charCodeAt(0);
+    const nineCharCode = '9'.charCodeAt(0);
 
-  let result = 0;
-  let isNegative =false;
+    let result = 0;
+    let isNegative = false;
 
-  // Перевірка на від'ємність
-  if(str[0]=== "-"){
-      isNegative = true
-  }
+    // Перевірка на від'ємність
+    if (str[0] === '-') {
+        isNegative = true;
+    }
 
-  // Перевірка на відсутність знака мінус або плюс
-  if (str[0] === '-' || str[0] === '+'){
-     str = str.slice(1)
-  }
+    // Перевірка на відсутність знака мінус або плюс
+    if (str[0] === '-' || str[0] === '+') {
+        str = str.slice(1);
+    }
 
-  for(let i =0; i<str.length;i++){
-      const char = str[i].charCodeAt(0)
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i].charCodeAt(0);
 
+        // Перевірка, чи символ є цифрою
+        if (char >= zeroCharCode && char <= nineCharCode) {
+            const digitValue = char - zeroCharCode;
+            // Додати цифрове значення до результату, зсунувши поточний результат на один розряд вліво
+            result = result * 10 + digitValue;
+        } else {
+            // Якщо зустріли не цифровий символ, припиняємо обробку
+            if (i === 0) {
+                return NaN; // Рядок не містить жодної цифри
+            }
+            break;
+        }
+    }
 
-      
-      // Перевірка, чи символ є цифрою
-      if(char >= zeroCharCode && char <= nineCharCode){
-          const digitValue = char - zeroCharCode;
-          result = result * 10 + digitValue
-      }else {
-          if( i===0){
-              return NaN
-          }
-         break
-      }
-  }
+    // Застосовуємо від'ємність, якщо необхідно
+    if (isNegative) {
+        result = -result;
+    }
 
-  if(isNegative){
-      result = -result
-  }
-
-  return result;
+    return result;
 
 }
 
